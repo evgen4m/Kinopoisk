@@ -10,7 +10,7 @@
         android:layout_height="40dp"
         android:background="@drawable/corner_background"
         android:gravity="center"
-        android:text="Жанры"
+        android:text="@string/textGenres"
         android:textColor="@color/purple_500"
         android:textSize="20sp" />
 

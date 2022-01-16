@@ -2,7 +2,6 @@ package com.esoft.kinopoisk.presentation.listFragment
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +18,7 @@ import com.esoft.kinopoisk.domain.model.Genres
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashSet
-import android.util.SparseBooleanArray
+import kotlin.Comparator
 
 
 class ListFilmsAdapter :
@@ -40,6 +39,7 @@ class ListFilmsAdapter :
     var listFilms = ArrayList<Film>()
         set(value) {
             field = value
+            sort(value)
             filmListAll.addAll(listFilms)
             notifyDataSetChanged()
         }
@@ -99,10 +99,9 @@ class ListFilmsAdapter :
         return holder!!
     }
 
-    @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(
         holder: RecyclerView.ViewHolder,
-        @SuppressLint("RecyclerView") position: Int
+        position: Int
     ) {
         when (holder.itemViewType) {
             GENRES_TYPE -> {
@@ -125,6 +124,11 @@ class ListFilmsAdapter :
 
             FILM_TITLE -> {
                 val viewHolder = holder as TitleFilmHolder
+                viewHolder.bind()
+            }
+
+            GENRES_TITLE -> {
+                val viewHolder = holder as TitleGenresHolder
                 viewHolder.bind()
             }
         }
@@ -179,14 +183,14 @@ class ListFilmsAdapter :
     inner class TitleGenresHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = TitleItemBinding.bind(view)
         fun bind() {
-            binding.titleGenres.text = "Жанры"
+            binding.titleGenres.setText(R.string.textGenres)
         }
     }
 
     inner class TitleFilmHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = TitleItemBinding.bind(view)
         fun bind() {
-            binding.titleGenres.text = "Фильмы"
+            binding.titleGenres.setText(R.string.textFilm)
         }
     }
 
@@ -218,5 +222,13 @@ class ListFilmsAdapter :
             listFilms.addAll(results.values as Collection<Film>)
             notifyDataSetChanged()
         }
+    }
+
+    private fun sort(list: ArrayList<Film>) {
+        Collections.sort(list, object : Comparator<Film> {
+            override fun compare(p0: Film, p1: Film): Int {
+                return p0.localized_name!!.compareTo(p1.localized_name!!)
+            }
+        })
     }
 }

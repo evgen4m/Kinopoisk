@@ -12,7 +12,7 @@
         android:focusable="true"
         android:gravity="center_horizontal"
         android:padding="10dp"
-        android:text="Жанры"
+        android:text="@string/textGenres"
         android:background="@drawable/selector"
         android:textColor="@color/white"
         android:textSize="15sp" />
