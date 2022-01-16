@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="200dp"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
-    android:background="@drawable/corner_background">
+    android:layout_margin="5dp">
 
     <TextView
         android:id="@+id/text_genres"
-        android:layout_width="200dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
         android:gravity="center_horizontal"
         android:padding="10dp"
         android:text="Жанры"
-        android:textColor="@color/purple_500"
+        android:background="@drawable/selector"
+        android:textColor="@color/white"
         android:textSize="15sp" />
 
 </RelativeLayout>

@@ -1,9 +1,13 @@
 package com.esoft.kinopoisk.presentation.listFragment
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.esoft.kinopoisk.R
@@ -12,12 +16,17 @@ import com.esoft.kinopoisk.databinding.ListGenresItemBinding
 import com.esoft.kinopoisk.databinding.TitleItemBinding
 import com.esoft.kinopoisk.domain.model.Film
 import com.esoft.kinopoisk.domain.model.Genres
+import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.HashSet
+import android.util.SparseBooleanArray
+
 
 class ListFilmsAdapter :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
 
     private lateinit var context: Context
+    private var lastSelectedPosition = RecyclerView.NO_POSITION
 
     private companion object {
         const val GENRES_TYPE = 0
@@ -26,9 +35,12 @@ class ListFilmsAdapter :
         const val FILM_TITLE = 3
     }
 
+    private val filmListAll = ArrayList<Film>()
+
     var listFilms = ArrayList<Film>()
         set(value) {
             field = value
+            filmListAll.addAll(listFilms)
             notifyDataSetChanged()
         }
 
@@ -59,40 +71,45 @@ class ListFilmsAdapter :
         return position == setGenres.size + 1
     }
 
-    private fun isFilm(position: Int): Boolean {
-        return position > setGenres.size
-    }
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         context = parent.context
         var holder: RecyclerView.ViewHolder? = null
-        when(viewType) {
+        when (viewType) {
             GENRES_TITLE -> {
-                val view: View = LayoutInflater.from(context).inflate(R.layout.title_item, parent, false)
+                val view: View =
+                    LayoutInflater.from(context).inflate(R.layout.title_item, parent, false)
                 holder = TitleGenresHolder(view = view)
             }
             GENRES_TYPE -> {
-                val view: View = LayoutInflater.from(context).inflate(R.layout.list_genres_item, parent, false)
+                val view: View =
+                    LayoutInflater.from(context).inflate(R.layout.list_genres_item, parent, false)
                 holder = GenresViewHolder(view = view)
             }
             FILM_TYPE -> {
-                val view: View = LayoutInflater.from(context).inflate(R.layout.list_film_item, parent, false)
+                val view: View =
+                    LayoutInflater.from(context).inflate(R.layout.list_film_item, parent, false)
                 holder = FilmsViewHolder(view = view)
             }
             FILM_TITLE -> {
-                val view: View = LayoutInflater.from(context).inflate(R.layout.title_item, parent, false)
+                val view: View =
+                    LayoutInflater.from(context).inflate(R.layout.title_item, parent, false)
                 holder = TitleFilmHolder(view = view)
             }
         }
         return holder!!
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    @SuppressLint("ResourceAsColor")
+    override fun onBindViewHolder(
+        holder: RecyclerView.ViewHolder,
+        @SuppressLint("RecyclerView") position: Int
+    ) {
         when (holder.itemViewType) {
             GENRES_TYPE -> {
                 val viewHolder = holder as GenresViewHolder
-                viewHolder.bind(genres = setGenres.elementAt(position - 1))
+                val genres = setGenres.elementAt(position - 1)
+                viewHolder.bind(genres = genres)
+                viewHolder.binding.textGenres.isSelected = lastSelectedPosition == position
             }
             FILM_TYPE -> {
                 val viewHolder = holder as FilmsViewHolder
@@ -101,7 +118,7 @@ class ListFilmsAdapter :
                 Glide
                     .with(context)
                     .load(url)
-                    .placeholder(R.drawable.not_found)
+                    .placeholder(R.drawable.ic_not_found)
                     .into(holder.binding.imageFilm)
 
             }
@@ -134,29 +151,72 @@ class ListFilmsAdapter :
 
     inner class GenresViewHolder(view: View) :
         RecyclerView.ViewHolder(view) {
-        private val binding = ListGenresItemBinding.bind(view)
+        val binding = ListGenresItemBinding.bind(view)
         fun bind(genres: Genres) {
             binding.apply {
-                textGenres.text = genres.genres
+                textGenres.text = genres.name
+                textGenres.setOnClickListener {
+                    textGenres.isSelected = !textGenres.isSelected
+                    if (textGenres.isSelected) {
+                        notifyItemChanged(lastSelectedPosition)
+                        lastSelectedPosition = layoutPosition
+                        notifyItemChanged(lastSelectedPosition)
+                        filter.filter(genres.name)
+                    }
+                    else {
+                        notifyItemChanged(lastSelectedPosition)
+                        lastSelectedPosition = RecyclerView.NO_POSITION
+                        notifyItemChanged(lastSelectedPosition)
+                        listFilms.clear()
+                        listFilms.addAll(filmListAll)
+                        notifyDataSetChanged()
+                    }
+                }
             }
-
-            /*itemView.setOnClickListener {
-                onItemClick(film)
-            }*/
         }
     }
 
-    inner class TitleGenresHolder(view: View): RecyclerView.ViewHolder(view) {
+    inner class TitleGenresHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = TitleItemBinding.bind(view)
         fun bind() {
             binding.titleGenres.text = "Жанры"
         }
     }
 
-    inner class TitleFilmHolder(view: View): RecyclerView.ViewHolder(view) {
+    inner class TitleFilmHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = TitleItemBinding.bind(view)
         fun bind() {
             binding.titleGenres.text = "Фильмы"
+        }
+    }
+
+    override fun getFilter(): Filter {
+        return filterList
+    }
+
+    private val filterList: Filter = object : Filter() {
+        override fun performFiltering(constraint: CharSequence): FilterResults {
+            val filteredList: MutableList<Film> = ArrayList()
+            if (constraint.isEmpty()) {
+                filteredList.addAll(filmListAll)
+            } else {
+                for (item in filmListAll) {
+                    for (genres in item.genres!!) {
+                        if (genres.toLowerCase().contains(constraint.toString().toLowerCase())) {
+                            filteredList.add(item)
+                        }
+                    }
+                }
+            }
+            val results = FilterResults()
+            results.values = filteredList
+            return results
+        }
+
+        override fun publishResults(constraint: CharSequence, results: FilterResults) {
+            listFilms.clear()
+            listFilms.addAll(results.values as Collection<Film>)
+            notifyDataSetChanged()
         }
     }
 }

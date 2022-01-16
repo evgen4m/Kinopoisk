@@ -1,7 +1,6 @@
 package com.esoft.kinopoisk.domain.model
 
 data class Film (
-    val title: String = "Фильмы",
     val id: Int?,
     val localized_name: String?,
     val name: String?,

@@ -20,7 +20,6 @@ class FilmRepositoryDataSourceImp(private val api: FilmsApi): FilmRepositoryData
                         for (film in results.list) {
                             films.add(
                                 Film(
-                                    title = "Фильмы",
                                     id = film.id,
                                     localized_name = film.localized_name,
                                     name = film.name,
@@ -53,7 +52,7 @@ class FilmRepositoryDataSourceImp(private val api: FilmsApi): FilmRepositoryData
                     if (results != null) {
                         for (film in results.list) {
                             for (genres in film.genres) {
-                               val newGenres = Genres (genres = genres)
+                               val newGenres = Genres (name = genres)
                                 genresSet.add(newGenres)
                             }
                         }
