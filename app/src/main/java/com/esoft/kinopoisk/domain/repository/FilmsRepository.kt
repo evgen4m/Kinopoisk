@@ -8,4 +8,6 @@ interface FilmsRepository {
     fun getAllFilms(callback: (List<Film>) -> Unit)
 
     fun getGenresInFilms(callback: (Set<Genres>) -> Unit)
+
+    fun getFilmById(id: Int, callback: (Film) -> Unit)
 }

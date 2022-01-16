@@ -12,4 +12,7 @@ class FilmRepositoryImp(private val filmsRepositoryDataSource: FilmRepositoryDat
 
     override fun getGenresInFilms(callback: (Set<Genres>) -> Unit) =
         filmsRepositoryDataSource.getFilmGenres(callback = callback)
+
+    override fun getFilmById(id: Int, callback: (Film) -> Unit) =
+        filmsRepositoryDataSource.getFilmById(id = id, callback = callback)
 }

@@ -9,4 +9,6 @@ interface ListFilmsView: BaseView {
     fun getAllFilms(list: ArrayList<Film>)
 
     fun getGenres(set: HashSet<Genres>)
+
+    fun openDetailScreen(id: Int)
 }

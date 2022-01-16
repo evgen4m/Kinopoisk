@@ -22,4 +22,8 @@ class ListFilmsPresenter(
             view?.getGenres(it as HashSet<Genres>)
         }
     }
+
+    fun openDetailScreen(film: Film) {
+        view?.openDetailScreen(id = film.id!!)
+    }
 }

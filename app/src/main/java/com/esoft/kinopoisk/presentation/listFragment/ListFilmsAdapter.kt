@@ -21,7 +21,7 @@ import kotlin.collections.HashSet
 import kotlin.Comparator
 
 
-class ListFilmsAdapter :
+class ListFilmsAdapter(private val onItemClick: (Film) -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
 
     private lateinit var context: Context
@@ -88,7 +88,7 @@ class ListFilmsAdapter :
             FILM_TYPE -> {
                 val view: View =
                     LayoutInflater.from(context).inflate(R.layout.list_film_item, parent, false)
-                holder = FilmsViewHolder(view = view)
+                holder = FilmsViewHolder(onItemClick = onItemClick, view = view)
             }
             FILM_TITLE -> {
                 val view: View =
@@ -139,7 +139,7 @@ class ListFilmsAdapter :
         return genres + listFilms.size
     }
 
-    inner class FilmsViewHolder(view: View) :
+    inner class FilmsViewHolder(private val onItemClick: (Film) -> Unit, view: View) :
         RecyclerView.ViewHolder(view) {
         val binding = ListFilmItemBinding.bind(view)
         fun bind(film: Film) {
@@ -147,9 +147,9 @@ class ListFilmsAdapter :
                 textFilmName.text = film.localized_name
             }
 
-            /*itemView.setOnClickListener {
+            itemView.setOnClickListener {
                 onItemClick(film)
-            }*/
+            }
         }
     }
 

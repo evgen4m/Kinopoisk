@@ -31,7 +31,9 @@ class ListFilmsFragment : Fragment(R.layout.fragment_list_films), ListFilmsView 
         )
     }
 
-    private val adapterFilms = ListFilmsAdapter()
+    private val adapterFilms = ListFilmsAdapter {
+        presenter.openDetailScreen(film = it)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,5 +74,11 @@ class ListFilmsFragment : Fragment(R.layout.fragment_list_films), ListFilmsView 
 
     override fun getGenres(set: HashSet<Genres>) {
         adapterFilms.setGenres = set
+    }
+
+    override fun openDetailScreen(id: Int) {
+        val bundle = Bundle()
+        bundle.putInt("filmId", id)
+        navController.navigate(R.id.detailFilmFragment, bundle)
     }
 }
