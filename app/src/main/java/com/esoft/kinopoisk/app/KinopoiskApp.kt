@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class KinopoiskApp: Application(){
 
-    lateinit var filmsRepository: FilmsRepository
+    var filmsRepository: FilmsRepository? = null
 
     private val BASE_URL = "https://s3-eu-west-1.amazonaws.com"
     private var mRetrofit: Retrofit? = null

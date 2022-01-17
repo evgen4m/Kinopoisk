@@ -1,8 +1,12 @@
 package com.esoft.kinopoisk.presentation.detailFilmFragment
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.esoft.kinopoisk.R
 import com.esoft.kinopoisk.app.KinopoiskApp
@@ -15,13 +19,15 @@ class DetailFilmFragment : Fragment(R.layout.fragment_detail_film), DetailFilmVi
     private var _binding: FragmentDetailFilmBinding? = null
     private val binding get() = _binding!!
 
+    private var title: String? = null
+
     private companion object {
         const val filmId = "filmId"
     }
 
     private val presenter by lazy {
         val repository = (activity?.application as KinopoiskApp).filmsRepository
-        val getFilmByIdUseCase = GetFilmByIdUseCase(filmsRepository = repository)
+        val getFilmByIdUseCase = GetFilmByIdUseCase(filmsRepository = repository!!)
         DetailFilmPresenter(
             id = requireArguments().getInt(filmId),
             getFilmByIdUseCase = getFilmByIdUseCase
@@ -34,6 +40,14 @@ class DetailFilmFragment : Fragment(R.layout.fragment_detail_film), DetailFilmVi
         _binding = FragmentDetailFilmBinding.bind(view)
         presenter.attachView(this)
         presenter.getFilmById()
+
+        val toolbar = binding.detailFragmentToolbar
+        (activity as AppCompatActivity).setSupportActionBar(toolbar)
+        toolbar.title = title
+        toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
+        toolbar.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
     override fun onDetach() {
@@ -46,6 +60,17 @@ class DetailFilmFragment : Fragment(R.layout.fragment_detail_film), DetailFilmVi
         _binding = null
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.home -> {
+                Toast.makeText(this.requireContext(),"ss", Toast.LENGTH_LONG).show()
+                return true
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun getFilmById(film: Film) {
 
         binding.apply {
@@ -56,8 +81,9 @@ class DetailFilmFragment : Fragment(R.layout.fragment_detail_film), DetailFilmVi
                 .into(imageDetailFilm)
 
             textDetailName.text = film.name
+            title = film.localized_name
             textDetailDate.text = getString(R.string.textReleaseDate) + film.year
-            textDetailRating.text = getString(R.string.rating) + film.year?: getString(R.string.unknown)
+            textDetailRating.text = getString(R.string.rating) + film.rating?: getString(R.string.unknown)
             textDetailDescription.text = film.description?:getString(R.string.no_description)
         }
 

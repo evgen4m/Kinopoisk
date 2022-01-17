@@ -1,9 +1,9 @@
 package com.esoft.kinopoisk.presentation.listFragment
 
-import android.app.ProgressDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
@@ -30,8 +30,8 @@ class ListFilmsFragment : Fragment(R.layout.fragment_list_films), ListFilmsView 
 
     private val presenter by lazy {
         val repository = (activity?.application as KinopoiskApp).filmsRepository
-        val getAllFilmsUseCase = GetAllFilmsUseCase(filmsRepository = repository)
-        val getFilmGenresUseCase = GetFilmGenresUseCase(filmsRepository = repository)
+        val getAllFilmsUseCase = GetAllFilmsUseCase(filmsRepository = repository!!)
+        val getFilmGenresUseCase = GetFilmGenresUseCase(filmsRepository = repository!!)
         ListFilmsPresenter(
             getAllFilmsUseCase = getAllFilmsUseCase,
             getFilmGenresUseCase = getFilmGenresUseCase
@@ -53,6 +53,10 @@ class ListFilmsFragment : Fragment(R.layout.fragment_list_films), ListFilmsView 
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentListFilmsBinding.bind(view)
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
+
+        val toolbar = binding.listFragmentToolbar
+        (activity as AppCompatActivity).setSupportActionBar(toolbar)
+        toolbar.title = getString(R.string.app_name)
     }
 
     override fun onResume() {
@@ -88,8 +92,8 @@ class ListFilmsFragment : Fragment(R.layout.fragment_list_films), ListFilmsView 
         adapterFilms.listFilms = list
     }
 
-    override fun getGenres(set: HashSet<Genres>) {
-        adapterFilms.setGenres = set
+    override fun getGenres(set: Set<Genres>) {
+        adapterFilms.setGenres = set as MutableSet<Genres>
     }
 
     override fun openDetailScreen(id: Int) {

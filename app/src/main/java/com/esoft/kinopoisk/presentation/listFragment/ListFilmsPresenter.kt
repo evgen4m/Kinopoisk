@@ -19,7 +19,7 @@ class ListFilmsPresenter(
 
     fun getGenres() {
         getFilmGenresUseCase.getGenres {
-            view?.getGenres(it as HashSet<Genres>)
+            view?.getGenres(it)
         }
     }
 

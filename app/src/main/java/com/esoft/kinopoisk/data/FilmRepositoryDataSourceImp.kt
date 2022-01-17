@@ -52,7 +52,7 @@ class FilmRepositoryDataSourceImp(private val api: FilmsApi): FilmRepositoryData
     }
 
     override fun getFilmGenres(callback: (Set<Genres>) -> Unit) {
-        val genresSet = HashSet<Genres>()
+        val genresSet = mutableSetOf<Genres>()
         val call = api.getAllFilms()
         call!!.enqueue(object : Callback<Results> {
             override fun onResponse(call: Call<Results>, response: Response<Results>) {

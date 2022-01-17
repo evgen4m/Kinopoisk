@@ -1,6 +1,5 @@
 package com.esoft.kinopoisk.presentation.listFragment
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -44,7 +43,7 @@ class ListFilmsAdapter(private val onItemClick: (Film) -> Unit) :
             notifyDataSetChanged()
         }
 
-    var setGenres = HashSet<Genres>()
+    var setGenres = mutableSetOf<Genres>()
         set(value) {
             field = value
             notifyDataSetChanged()
