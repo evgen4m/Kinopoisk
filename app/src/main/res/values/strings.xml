@@ -6,8 +6,8 @@
 
     <string name="textGenres">Жанры</string>
     <string name="textFilm">Фильмы</string>
-    <string name="textReleaseDate">Год:</string>
-    <string name="rating">Рейтинг:</string>
+    <string name="textReleaseDate">Год: %1$s</string>
+    <string name="rating">Рейтинг: %1$s</string>
     <string name="no_description">Описание отсутствует</string>
     <string name="unknown">Неизвестно</string>
 

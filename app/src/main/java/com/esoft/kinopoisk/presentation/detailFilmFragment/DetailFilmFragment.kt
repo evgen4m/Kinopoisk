@@ -82,8 +82,8 @@ class DetailFilmFragment : Fragment(R.layout.fragment_detail_film), DetailFilmVi
 
             textDetailName.text = film.name
             title = film.localized_name
-            textDetailDate.text = getString(R.string.textReleaseDate) + film.year
-            textDetailRating.text = getString(R.string.rating) + film.rating?: getString(R.string.unknown)
+            textDetailDate.text = getString(R.string.textReleaseDate, film.year)
+            textDetailRating.text = getString(R.string.rating, film.rating?: getString(R.string.unknown))
             textDetailDescription.text = film.description?:getString(R.string.no_description)
         }
 
