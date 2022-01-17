@@ -8,9 +8,7 @@ data class Results(
 )
 
 data class FilmModel(
-
     val title: String = "Фильмы",
-
     @SerializedName("id")
     val id: Int,
     @SerializedName("localized_name")

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="150dp"
     android:layout_height="150dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center"
+    app:cardCornerRadius="15dp"
     android:layout_margin="10dp">
 
     <ImageView
@@ -14,16 +16,15 @@
     </ImageView>
 
     <TextView
+        style="@style/TextFilmNameStyle"
         android:id="@+id/text_film_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="@color/filmNameBackColor"
         android:ellipsize="end"
-        android:textColor="@color/white"
         android:gravity="center"
         android:lines="2"
-        android:text="@string/film_name"
-        android:textSize="15sp"/>
+        android:text="@string/film_name" />
 
-</FrameLayout>
+</androidx.cardview.widget.CardView>

@@ -42,6 +42,11 @@ class ListFilmsFragment : Fragment(R.layout.fragment_list_films), ListFilmsView 
         presenter.getGenres()
     }
 
+    override fun onDetach() {
+        super.onDetach()
+        presenter.detachView()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding =  FragmentListFilmsBinding.bind(view)

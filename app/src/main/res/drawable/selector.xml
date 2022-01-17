@@ -4,18 +4,12 @@
     <item android:state_selected="true">
         <shape android:shape="rectangle">
             <solid android:color="@android:color/holo_blue_bright" />
-            <corners android:radius="20dp" />
         </shape>
     </item>
 
-    <item android:state_selected="false"
-        android:left="1dp"
-        android:right="1dp"
-        android:top="1dp"
-        android:bottom="2dp">
+    <item android:state_selected="false">
         <shape android:shape="rectangle">
-            <solid android:color="@android:color/darker_gray" />
-            <corners android:radius="20dp" />
+            <solid android:color="@android:color/white" />
         </shape>
     </item>
 

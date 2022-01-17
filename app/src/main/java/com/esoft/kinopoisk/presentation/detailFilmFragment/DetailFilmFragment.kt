@@ -23,15 +23,17 @@ class DetailFilmFragment : Fragment(R.layout.fragment_detail_film), DetailFilmVi
         )
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        presenter.attachView(this)
-        presenter.getFilmById()
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentDetailFilmBinding.bind(view)
+        presenter.attachView(this)
+        presenter.getFilmById()
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        presenter.detachView()
     }
 
     override fun getFilmById(film: Film) {

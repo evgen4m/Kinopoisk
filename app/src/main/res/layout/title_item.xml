@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:padding="5dp"
+    android:layout_margin="5dp"
     android:layout_height="wrap_content">
 
     <TextView
+        style="@style/TitleStyle"
         android:id="@+id/title_genres"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="@drawable/corner_background"
         android:gravity="center"
-        android:text="@string/textGenres"
-        android:textColor="@color/purple_500"
-        android:textSize="20sp" />
+        android:text="@string/textGenres" />
 
-</FrameLayout>
+</androidx.cardview.widget.CardView>

@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="200dp"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp">
+    android:layout_margin="5dp"
+    app:cardCornerRadius="15dp">
 
     <TextView
+        style="@style/TextGenresStyle"
         android:id="@+id/text_genres"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/selector"
         android:clickable="true"
         android:focusable="true"
         android:gravity="center_horizontal"
         android:padding="10dp"
-        android:text="@string/textGenres"
-        android:background="@drawable/selector"
-        android:textColor="@color/white"
-        android:textSize="15sp" />
+        android:text="@string/textGenres" />
 
-</RelativeLayout>
+</androidx.cardview.widget.CardView>

@@ -13,7 +13,7 @@ open class BasePresenter<V : BaseView> {
 
     }
 
-    fun destroy() {
+    fun detachView() {
         view = null
     }
 
