@@ -5,7 +5,7 @@ import com.esoft.kinopoisk.domain.repository.FilmsRepository
 
 class GetFilmByIdUseCase(private val filmsRepository: FilmsRepository) {
 
-    fun getFilmById(id: Int, callback: (Film) -> Unit) =
-        filmsRepository.getFilmById(id = id, callback = callback)
+    fun getFilmById(id: Int): Film =
+        filmsRepository.getFilmById(id = id)
 
 }

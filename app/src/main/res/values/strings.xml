@@ -6,6 +6,10 @@
 
     <string name="textGenres">Жанры</string>
     <string name="textFilm">Фильмы</string>
-    <string name="textReleaseDate">Год: 2018</string>
-    <string name="rating">Рейтинг: 6.083</string>
+    <string name="textReleaseDate">Год:</string>
+    <string name="rating">Рейтинг:</string>
+    <string name="no_description">Описание отсутствует</string>
+    <string name="unknown">Неизвестно</string>
+
+
 </resources>

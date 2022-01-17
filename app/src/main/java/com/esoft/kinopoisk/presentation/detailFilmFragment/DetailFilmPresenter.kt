@@ -9,9 +9,8 @@ class DetailFilmPresenter(
     ): BasePresenter<DetailFilmView>() {
 
         fun getFilmById() {
-            getFilmByIdUseCase.getFilmById(id = id) {
-                view?.getFilmById(film = it)
-            }
+            val film = getFilmByIdUseCase.getFilmById(id = id)
+            view?.getFilmById(film = film)
         }
 
 }

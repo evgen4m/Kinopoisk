@@ -24,7 +24,7 @@ import kotlin.Comparator
 class ListFilmsAdapter(private val onItemClick: (Film) -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
 
-    private lateinit var context: Context
+    private var context: Context? = null
     private var lastSelectedPosition = RecyclerView.NO_POSITION
 
     private companion object {
@@ -115,7 +115,7 @@ class ListFilmsAdapter(private val onItemClick: (Film) -> Unit) :
                 viewHolder.bind(film = listFilms[position - 2 - setGenres.size])
                 val url = listFilms[position - 2 - setGenres.size].image_url
                 Glide
-                    .with(context)
+                    .with(context!!)
                     .load(url)
                     .placeholder(R.drawable.ic_not_found)
                     .into(holder.binding.imageFilm)

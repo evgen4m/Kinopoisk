@@ -12,13 +12,18 @@ import com.esoft.kinopoisk.domain.useCase.GetFilmByIdUseCase
 
 class DetailFilmFragment : Fragment(R.layout.fragment_detail_film), DetailFilmView {
 
-    private lateinit var binding: FragmentDetailFilmBinding
+    private var _binding: FragmentDetailFilmBinding? = null
+    private val binding get() = _binding!!
+
+    private companion object {
+        const val filmId = "filmId"
+    }
 
     private val presenter by lazy {
         val repository = (activity?.application as KinopoiskApp).filmsRepository
         val getFilmByIdUseCase = GetFilmByIdUseCase(filmsRepository = repository)
         DetailFilmPresenter(
-            id = requireArguments().getInt("filmId"),
+            id = requireArguments().getInt(filmId),
             getFilmByIdUseCase = getFilmByIdUseCase
         )
     }
@@ -26,7 +31,7 @@ class DetailFilmFragment : Fragment(R.layout.fragment_detail_film), DetailFilmVi
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentDetailFilmBinding.bind(view)
+        _binding = FragmentDetailFilmBinding.bind(view)
         presenter.attachView(this)
         presenter.getFilmById()
     }
@@ -36,17 +41,26 @@ class DetailFilmFragment : Fragment(R.layout.fragment_detail_film), DetailFilmVi
         presenter.detachView()
     }
 
-    override fun getFilmById(film: Film) {
-        Glide
-            .with(requireContext())
-            .load(film.image_url)
-            .placeholder(R.drawable.ic_not_found)
-            .into(binding.imageDetailFilm)
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 
-        binding.textDetailName.text = film.name
-        binding.textDetailDate.text = "Год: ${film.year}"
-        binding.textDetailRating.text = "Рейтинг: ${film.rating?:"Неизвестно"}"
-        binding.textDetailDescription.text = film.description?: "Описание отсутствует"
+    override fun getFilmById(film: Film) {
+
+        binding.apply {
+            Glide
+                .with(requireContext())
+                .load(film.image_url)
+                .placeholder(R.drawable.ic_not_found)
+                .into(imageDetailFilm)
+
+            textDetailName.text = film.name
+            textDetailDate.text = getString(R.string.textReleaseDate) + film.year
+            textDetailRating.text = getString(R.string.rating) + film.year?: getString(R.string.unknown)
+            textDetailDescription.text = film.description?:getString(R.string.no_description)
+        }
+
     }
 
 }

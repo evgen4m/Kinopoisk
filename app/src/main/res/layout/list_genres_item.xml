@@ -7,7 +7,7 @@
     app:cardCornerRadius="15dp">
 
     <TextView
-        style="@style/TextGenresStyle"
+        style="@style/TextAppearance.AppCompat.Body2"
         android:id="@+id/text_genres"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

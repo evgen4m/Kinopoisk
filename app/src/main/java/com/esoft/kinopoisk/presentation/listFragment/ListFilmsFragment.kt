@@ -1,5 +1,6 @@
 package com.esoft.kinopoisk.presentation.listFragment
 
+import android.app.ProgressDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
@@ -17,8 +18,14 @@ import com.esoft.kinopoisk.domain.useCase.GetFilmGenresUseCase
 
 class ListFilmsFragment : Fragment(R.layout.fragment_list_films), ListFilmsView {
 
-    private lateinit var binding: FragmentListFilmsBinding
-    private lateinit var navController: NavController
+    private var _binding: FragmentListFilmsBinding? = null
+    private val binding get() = _binding!!
+
+    private var navController: NavController? = null
+
+    private companion object {
+        const val filmId = "filmId"
+    }
 
 
     private val presenter by lazy {
@@ -42,16 +49,10 @@ class ListFilmsFragment : Fragment(R.layout.fragment_list_films), ListFilmsView 
         presenter.getGenres()
     }
 
-    override fun onDetach() {
-        super.onDetach()
-        presenter.detachView()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding =  FragmentListFilmsBinding.bind(view)
+        _binding = FragmentListFilmsBinding.bind(view)
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
-
     }
 
     override fun onResume() {
@@ -73,6 +74,16 @@ class ListFilmsFragment : Fragment(R.layout.fragment_list_films), ListFilmsView 
         }
     }
 
+    override fun onDetach() {
+        super.onDetach()
+        presenter.detachView()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
     override fun getAllFilms(list: ArrayList<Film>) {
         adapterFilms.listFilms = list
     }
@@ -83,7 +94,7 @@ class ListFilmsFragment : Fragment(R.layout.fragment_list_films), ListFilmsView 
 
     override fun openDetailScreen(id: Int) {
         val bundle = Bundle()
-        bundle.putInt("filmId", id)
-        navController.navigate(R.id.detailFilmFragment, bundle)
+        bundle.putInt(filmId, id)
+        navController!!.navigate(R.id.detailFilmFragment, bundle)
     }
 }

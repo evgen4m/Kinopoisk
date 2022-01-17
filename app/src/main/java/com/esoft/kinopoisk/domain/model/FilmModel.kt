@@ -4,25 +4,24 @@ import com.google.gson.annotations.SerializedName
 
 data class Results(
     @SerializedName("films")
-    val list: List<FilmModel>
+    val list: List<FilmModel>? = null
 )
 
 data class FilmModel(
-    val title: String = "Фильмы",
     @SerializedName("id")
-    val id: Int,
+    val id: Int? = null,
     @SerializedName("localized_name")
-    val localized_name: String,
+    val localized_name: String? = null,
     @SerializedName("name")
-    val name: String,
+    val name: String? = null,
     @SerializedName("year")
-    val year: String,
+    val year: String? = null,
     @SerializedName("rating")
-    val rating: String,
+    val rating: String? = null,
     @SerializedName("image_url")
-    val image_url: String,
+    val image_url: String? = null,
     @SerializedName("description")
-    val description: String,
+    val description: String? = null,
     @SerializedName("genres")
-    val genres: List<String>
+    val genres: List<String>? = null
 )

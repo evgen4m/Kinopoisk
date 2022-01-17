@@ -25,55 +25,48 @@
         android:id="@+id/image_detail_film"
         android:layout_width="120dp"
         android:layout_height="170dp"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="15dp"
         android:src="@drawable/ic_launcher_background"
         android:visibility="visible"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/startGuideline"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/text_detail_name"
+        style="@style/TextAppearance.AppCompat.Medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
         android:text="@string/film_name"
         android:textColor="@color/black"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        android:layout_marginStart="15dp"
         app:layout_constrainedWidth="true"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/endGuideline"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toEndOf="@+id/image_detail_film"
         app:layout_constraintTop_toTopOf="@+id/image_detail_film" />
 
     <TextView
         android:id="@+id/text_detail_date"
+        style="@style/TextAppearance.MaterialComponents.Body2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:lines="1"
         android:text="@string/textReleaseDate"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
         android:textColor="@color/black"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="@+id/text_detail_name"
         app:layout_constraintTop_toBottomOf="@+id/text_detail_name" />
 
     <TextView
         android:id="@+id/text_detail_rating"
+        style="@style/TextAppearance.MaterialComponents.Body2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:lines="1"
         android:text="@string/rating"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
         android:textColor="@color/black"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="@+id/text_detail_date"
         app:layout_constraintTop_toBottomOf="@+id/text_detail_date" />
 
@@ -87,15 +80,15 @@
 
     <TextView
         android:id="@+id/text_detail_description"
+        style="@style/TextAppearance.MaterialComponents.Body2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:textColor="@color/black"
-        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="@id/endGuideline"
         app:layout_constraintStart_toStartOf="@id/startGuideline"
         app:layout_constraintTop_toBottomOf="@+id/title_bottom_barier"
-        tools:text="@tools:sample/lorem/random"/>
+        tools:text="@tools:sample/lorem/random" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

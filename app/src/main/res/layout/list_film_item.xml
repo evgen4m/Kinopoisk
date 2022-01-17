@@ -5,7 +5,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center"
     app:cardCornerRadius="15dp"
-    android:layout_margin="10dp">
+    android:layout_marginTop="8dp"
+    android:layout_marginStart="20dp">
 
     <ImageView
         android:id="@+id/image_film"
@@ -16,7 +17,7 @@
     </ImageView>
 
     <TextView
-        style="@style/TextFilmNameStyle"
+        style="@style/TextAppearance.AppCompat.Small"
         android:id="@+id/text_film_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,6 +25,8 @@
         android:background="@color/filmNameBackColor"
         android:ellipsize="end"
         android:gravity="center"
+        android:padding="5dp"
+        android:textColor="?attr/colorOnPrimary"
         android:lines="2"
         android:text="@string/film_name" />
 
